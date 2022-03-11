@@ -6,28 +6,29 @@ import type { KAASearchResult, GogoSearchResult } from "../../assets/ts";
 const gogo = new Gogo("https://gogoanime.pe");
 
 export default async function getAnime(
-  req: NextApiRequest,
-  res: NextApiResponse
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
-  const result = await combiner(req.query.q as string);
-  res.status(200).json(JSON.stringify(result, null, "\t"));
+    const result = await combiner(req.query.q as string);
+    return res.status(200).json(JSON.stringify(result, null, "\t"));
 }
 
 async function combiner(query: string) {
-  const kaa: KAASearchResult | KAASearchResult[] = await getKAAAnime(query);
-  const gogo: GogoSearchResult | GogoSearchResult[] = await getGoGoAnime(query);
-  const res = {
-    kaa: kaa,
-    gogo: gogo,
-  };
-  return res;
+    const kaa: KAASearchResult[] = await getKAAAnime(query);
+    const gogo: GogoSearchResult[] = await getGoGoAnime(query);
+    const res = {
+        notFound: gogo || kaa ? false : true,
+        kaa: kaa,
+        gogo: gogo,
+    };
+    return res;
 }
 async function getKAAAnime(query: string) {
-  const result = await search(query);
-  return result;
+    const result = await search(query);
+    return result as unknown as KAASearchResult[];
 }
 
 async function getGoGoAnime(query: string) {
-  const result = await gogo.searchAnime(query);
-  return result;
+    const result = await gogo.searchAnime(query);
+    return result;
 }

@@ -10,14 +10,14 @@ import { cleanQuery } from "../assets/ts/functions";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const route = useRouter();
-    const [isUsed, setUsed] = useState(false);
+    const [isDark, setDark] = useState(false);
     const [isIndex, setIsIndex] = useState(true);
     const [QueryQ, setQueryQ] = useState<string>();
     const darkmode = useDarkMode(true);
     const theme = darkmode.value ? dark : light;
 
     useEffect(() => {
-        setUsed(true);
+        setDark(true);
         if (/\/search/.test(window.location.href)) {
             setIsIndex(false);
         }
@@ -86,7 +86,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                                     onClick={searchedAnimeButton}
                                     className={
                                         searchBar.btnhovercolor +
-                                        "rounded-full focus:outline-none w-12 flex items-center justify-center"
+                                        "rounded-full focus:outline-none w-8 flex items-center justify-center"
                                     }
                                     style={{ transition: "all 250ms linear" }}
                                 >
@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </button>
                 </li>
             </ul>
-            {isUsed && <Component dark={darkmode.value} {...pageProps} />}
+            {isDark && <Component dark={darkmode.value} {...pageProps} />}
         </ThemeProvider>
     );
 }
