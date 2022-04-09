@@ -1,5 +1,5 @@
 import React from "react";
-import { AnimeData, GogoSearchResult, KAASearchResult } from "../ts";
+import { AnimeData, GogoSearchResult, KAASearchResult } from "../assets/ts";
 
 export default function AnimeCard({ data, source, dark }: AnimeData) {
     const Colors = {
